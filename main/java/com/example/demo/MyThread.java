@@ -19,16 +19,19 @@ public class MyThread extends Thread {
     }
 
     @Override
-    public void run(){
+    public void run() {
+        long start = 0, end = 0;
         do {
             testCounter.increment();
-            testGauge.set(12938);
+            start = System.currentTimeMillis();
+
             try {
                 sleep(1000L);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
+            end = System.currentTimeMillis();
+            testGauge.addAndGet(Math.toIntExact(end - start));
         } while (!(testCounter.count() > 1000.0));
     }
 }
